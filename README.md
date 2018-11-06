@@ -1,3 +1,15 @@
+
+# tony notes
+- added missing constant for floats
+- added index.html and code there to load
+- seeing horrible performance but it works
+- I changed the size down to 200x200 to make sure it is working
+- CPU is completely bound during rendering picture
+
+
+
+
+
 Ray Tracing in One Weekend
 ====================================================================================================
 
