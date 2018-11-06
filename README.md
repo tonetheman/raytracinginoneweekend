@@ -3,6 +3,8 @@
 
 ## ray tracing in WASM (on a weekend)
 
+- timing is 18-19 seconds for 200 scan lines
+
 - added missing constant for floats
 - added index.html and code there to load
 - seeing horrible performance but it works

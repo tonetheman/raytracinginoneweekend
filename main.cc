@@ -19,6 +19,7 @@
 
 // #define MAXFLOAT        3.40282346638528859812e+38F
 #define MAXFLOAT    4096
+vec3 ZERO = vec3(0,0,0);
 
 vec3 color(const ray& r, hitable *world, int depth) {
     hit_record rec;
@@ -29,7 +30,8 @@ vec3 color(const ray& r, hitable *world, int depth) {
              return attenuation*color(scattered, world, depth+1);
         }
         else {
-            return vec3(0,0,0);
+            // TC: did not change performance
+            return ZERO; //vec3(0,0,0);
         }
     }
     else {
@@ -94,7 +96,8 @@ int main() {
     camera cam(lookfrom, lookat, vec3(0,1,0), 20, float(nx)/float(ny), aperture, dist_to_focus);
 
     int index = 0;
-    for (int j = ny-1; j >= 0; j--) {
+      EM_ASM({console.time('ray');});
+    for (int j = ny-1; j >= 0; j--) {             
         for (int i = 0; i < nx; i++) {
             vec3 col(0, 0, 0);
             for (int s=0; s < ns; s++) {
@@ -104,8 +107,15 @@ int main() {
                 vec3 p = r.point_at_parameter(2.0);
                 col += color(r, world,0);
             }
-            col /= float(ns);
-            col = vec3( sqrt(col[0]), sqrt(col[1]), sqrt(col[2]) );
+            
+            //col /= float(ns);
+            col.e[0] = col.e[0]/ns;
+            col.e[1] = col.e[1]/ns;
+            col.e[2] = col.e[2]/ns;
+            //col = vec3( sqrt(col[0]), sqrt(col[1]), sqrt(col[2]) );
+            col.e[0] = sqrt(col.e[0]);
+            col.e[1] = sqrt(col.e[1]);
+            col.e[2] = sqrt(col.e[2]);
             int ir = int(255.99*col[0]); 
             int ig = int(255.99*col[1]); 
             int ib = int(255.99*col[2]); 
@@ -118,6 +128,8 @@ int main() {
             index++;
         }
     }
+        EM_ASM({console.timeEnd('ray');});
+
     EM_ASM({pixelsdone()});
 }
 
