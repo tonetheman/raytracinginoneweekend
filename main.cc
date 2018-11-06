@@ -17,7 +17,8 @@
 #include "material.h"
 #include <emscripten.h>
 
-#define MAXFLOAT        3.40282346638528859812e+38F
+// #define MAXFLOAT        3.40282346638528859812e+38F
+#define MAXFLOAT    4096
 
 vec3 color(const ray& r, hitable *world, int depth) {
     hit_record rec;
@@ -71,8 +72,8 @@ hitable *random_scene() {
 }
 
 int main() {
-    int nx = 1200;
-    int ny = 800;
+    int nx = 200;
+    int ny = 200;
     int ns = 10;
     std::cout << "P3\n" << nx << " " << ny << "\n255\n";
     hitable *list[5];
@@ -113,7 +114,7 @@ int main() {
             EM_ASM({setpixel($0,$1,$2,$3)},
             ir,
             ig,
-            ib,i);
+            ib,index);
             index++;
         }
     }
