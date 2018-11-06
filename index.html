@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <title>ray tracing in a weekend</title>
+  <body>
+    <canvas id="c" width="1200" height="800"></canvas>
+    <script>
+let W = 1200, H = 800;
+function setpixel(r,g,b,idx) {
+    let ri = idx*4;
+    data[ri+0] = r;
+    data[ri+1] = g;
+    data[ri+2] = b;
+    data[ri+3] = 255;
+}
+function pixelsdone() {
+    console.log("pixels are finished!");
+    ctx.putImageData(imageData,0,0);
+}
+function mainline() {
+  c = document.getElementById("c");
+  ctx = c.getContext("2d");
+  imageData = ctx.getImageData(0, 0, W, H);
+  data = imageData.data;
+  // load the script
+  let s = document.createElement("script");
+  s.src = "main.js";
+  document.body.appendChild(s);
+}
+window.onload = mainline;
+    </script>
+  </body>
+</html>
