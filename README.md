@@ -1,5 +1,8 @@
 
 # tony notes
+
+## ray tracing in WASM (on a weekend)
+
 - added missing constant for floats
 - added index.html and code there to load
 - seeing horrible performance but it works
