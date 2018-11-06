@@ -16,6 +16,7 @@
 #include "camera.h"
 #include "material.h"
 
+#define MAXFLOAT        3.40282346638528859812e+38F
 
 vec3 color(const ray& r, hitable *world, int depth) {
     hit_record rec;
