@@ -15,6 +15,7 @@
 #include "float.h"
 #include "camera.h"
 #include "material.h"
+#include <emscripten.h>
 
 #define MAXFLOAT        3.40282346638528859812e+38F
 
@@ -91,6 +92,7 @@ int main() {
 
     camera cam(lookfrom, lookat, vec3(0,1,0), 20, float(nx)/float(ny), aperture, dist_to_focus);
 
+    int index = 0;
     for (int j = ny-1; j >= 0; j--) {
         for (int i = 0; i < nx; i++) {
             vec3 col(0, 0, 0);
@@ -106,9 +108,16 @@ int main() {
             int ir = int(255.99*col[0]); 
             int ig = int(255.99*col[1]); 
             int ib = int(255.99*col[2]); 
-            std::cout << ir << " " << ig << " " << ib << "\n";
+            //std::cout << ir << " " << ig << " " << ib << "\n";
+
+            EM_ASM({setpixel($0,$1,$2,$3)},
+            ir,
+            ig,
+            ib,i);
+            index++;
         }
     }
+    EM_ASM({pixelsdone()});
 }
 
 
