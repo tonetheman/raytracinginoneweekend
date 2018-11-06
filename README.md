@@ -3,6 +3,10 @@
 
 ## ray tracing in WASM (on a weekend)
 
+- timing is worse in chrome vs firefox
+    - firefox finishing in 50% of the time
+    - windows vs chromebook does not seem to matter
+    
 - timing is 18-19 seconds for 200 scan lines
 
 - added missing constant for floats
